@@ -4,8 +4,8 @@
 #define HSYNCPIN 9 // MEGA
 
 //These two pin cannot be modified without modify the HSYNC assembler code
-#define COLORPIN0 42 // MEGA
-#define COLORPIN1 41 // MEGA
+#define COLORPIN0 30 // MEGA
+#define COLORPIN1 31 // MEGA
 
 //VSYNC pin used by TIMER1. Can be 11 or 12
 #define VSYNCPIN 11 // MEGA
@@ -152,7 +152,7 @@ ISR(TIMER2_OVF_vect) {
       "    ldi r16, 0       \n\t" //
       "    out %[port], r16 \n\t" //write black for next pixels
     :
-    : [port] "I" (_SFR_IO_ADDR(PORTL)), // MEGA
+    : [port] "I" (_SFR_IO_ADDR(PORTC)), 
       "z" "I" (/*rline*/(byte*)vgaxfb + rlinecnt*VGAX_BWIDTH)
     : "r16", "r17", "r20", "r21", "memory");
 
