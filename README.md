@@ -1,4 +1,9 @@
-# VGAX Library for Arduino UNO
+# VGAX Library for Arduino MEGA (porting)
+
+HSYNC: pin 9 
+VSYNC: pin 11
+COLORPIN0: pin 42 
+COLORPIN1: pin 41 
 
 COPYRIGHT (C) 2014 Sandro Maffiodo  
 [smaffer@gmail.com](mailto:smaffer@gmail.com)  

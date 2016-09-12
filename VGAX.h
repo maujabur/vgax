@@ -1,5 +1,5 @@
 /*
-VGAX Library for Arduino UNO (ATMega328 MCU)
+VGAX Library for Arduino MEGA (porting)
 Source code url: https://github.com/smaffer/vgax
 
 120x60px VGA framebuffer with 4 colors

@@ -1,14 +1,14 @@
 #include "VGAX.h"
 
 //HSYNC pin used by TIMER2
-#define HSYNCPIN 3
+#define HSYNCPIN 9 // MEGA
 
 //These two pin cannot be modified without modify the HSYNC assembler code
-#define COLORPIN0 6
-#define COLORPIN1 7
+#define COLORPIN0 42 // MEGA
+#define COLORPIN1 41 // MEGA
 
-//VSYNC pin used by TIMER1. Can be 9 or 10
-#define VSYNCPIN 9
+//VSYNC pin used by TIMER1. Can be 11 or 12
+#define VSYNCPIN 11 // MEGA
 
 //Number of VGA lines to be skipped (black lines)
 /*These lines includes the vertical sync pulse and back porch.
@@ -119,11 +119,11 @@ ISR(TIMER2_OVF_vect) {
     Output all pixels.
 
     NOTE: My trick here is to unpack 4 pixels and shift them before writing to
-    PORTD.
+    PORTL.
 
     Pixels are packed as 0b11223344 because the first pixel write have no time
     to perform a shift (ld, out) and must be prealigned to the two upper bits 
-    of PORTD, where the two wires of the VGA DSUB are connected. The second, 
+    of PORTL, where the two wires of the VGA DSUB are connected. The second, 
     the third and the forth pixels are shifted left using mul opcode instead 
     of a left shift opcode. Shift opcodes are slow and can shift only 1 bit at
     a time, using 1 clock cycle. mul is faster.
@@ -152,7 +152,7 @@ ISR(TIMER2_OVF_vect) {
       "    ldi r16, 0       \n\t" //
       "    out %[port], r16 \n\t" //write black for next pixels
     :
-    : [port] "I" (_SFR_IO_ADDR(PORTD)),
+    : [port] "I" (_SFR_IO_ADDR(PORTL)), // MEGA
       "z" "I" (/*rline*/(byte*)vgaxfb + rlinecnt*VGAX_BWIDTH)
     : "r16", "r17", "r20", "r21", "memory");
 
@@ -188,7 +188,7 @@ void VGAX::begin(bool enableTone) {
   TCNT0=0;
   //TIMER1 - vertical sync pulses
   pinMode(VSYNCPIN, OUTPUT);
-  #if VSYNCPIN==10
+  #if VSYNCPIN==11
   TCCR1A=bit(WGM10) | bit(WGM11) | bit(COM1B1);
   TCCR1B=bit(WGM12) | bit(WGM13) | bit(CS12) | bit(CS10); //1024 prescaler
   OCR1A=259; //16666 / 64 uS=260 (less one)
@@ -205,7 +205,7 @@ void VGAX::begin(bool enableTone) {
   #endif
   //TIMER2 - horizontal sync pulses
   pinMode(HSYNCPIN, OUTPUT);
-  TCCR2A=bit(WGM20) | bit(WGM21) | bit(COM2B1); //pin3=COM2B1
+  TCCR2A=bit(WGM20) | bit(WGM21) | bit(COM2B1); //pin9=COM2B1
   TCCR2B=bit(WGM22) | bit(CS21); //8 prescaler
   OCR2A=63; //32 / 0.5 uS=64 (less one)
   OCR2B=7; //4 / 0.5 uS=8 (less one)
