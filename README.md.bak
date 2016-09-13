@@ -1,9 +1,14 @@
 # VGAX Library for Arduino MEGA (porting)
 
-HSYNC: pin 9  
-VSYNC: pin 11  
-COLORPIN0: pin 30  
-COLORPIN1: pin 31  
+
+HSYNC: pin 9 
+
+VSYNC: pin 11
+
+COLORPIN0: pin 30 
+
+COLORPIN1: pin 31 
+
 
 COPYRIGHT (C) 2014 Sandro Maffiodo  
 [smaffer@gmail.com](mailto:smaffer@gmail.com)  
